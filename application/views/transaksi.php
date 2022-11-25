@@ -67,39 +67,75 @@
                     </div>
                   </div>
 
+                 
 
                   <div class="row">
-            
-                <div class="col-md-12" style="padding-left:10px; padding-right:5px">
-                <table class="table table-condensed">
-                <thead>
-                    <tr>
-                        <th >Nama barang</th>
-                        <th >Harga Beli</th>
-                        <th >Harga Jual</th>
-                        <th >QTY</th>
-                        <th >keuntungan</th>
-                    </tr>
-                </thead>
-                <tbody id="itemlist">
-                  
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <button id="addlist" class="btn btn-small btn-primary" onclick="additem(); return false">Add</i></button>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-                </div>
+                        <h4 class="card-title" style="margin-bottom : 10px">Penjualan barang</h4>
+                      <div class="col-md-12" style="padding-left:10px; padding-right:5px">
+                      <table class="table table-condensed">
+                      <thead>
+                          <tr>
+                              <th >Nama barang</th>
+                              <th >Harga Beli</th>
+                              <th >Harga Jual</th>
+                              <th >QTY</th>
+                              <th >keuntungan</th>
+                          </tr>
+                      </thead>
+                      <tbody id="itemlist">
+                        
+                      </tbody>
+                      <tfoot>
+                          <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td>
+                                  <button id="addlist" class="btn btn-small btn-primary" onclick="additem(); return false">Add</i></button>
+                              </td>
+                          </tr>
+
+                        
+                      </tfoot>
+                      </table>
+                          </div>
                 
-              </div>
+                    </div>
+
+
+
+
+
+                    <div class="row">
+                        <h4 class="card-title" style="margin-bottom : 10px">Perngeluaran</h4>
+                      <div class="col-md-12" style="padding-left:10px; padding-right:5px">
+                      <table class="table table-condensed">
+                      <thead>
+                          <tr>
+                              <th >Keterangan</th>
+                              <th >Nominal</th>
+                          </tr>
+                      </thead>
+                      <tbody id="itemlist2">
+                        
+                      </tbody>
+                      <tfoot>
+                          <tr>
+                              <td></td>
+                              <td></td>
+                              <td>
+                                  <button id="addlist2" class="btn btn-small btn-primary" onclick="additem2(); return false">Add</i></button>
+                              </td>
+                          </tr>
+
+                        
+                      </tfoot>
+                      </table>
+                          </div>
+                
+                    </div>
 
 
                   
@@ -212,19 +248,21 @@
                 var harga_jual_form = document.createElement('input');
                 harga_jual_form.setAttribute('name', 'harga_jual[' + i + ']');
                 harga_jual_form.setAttribute('datanomor', i);
-                harga_jual_form.setAttribute('class', 'form-control');
+                harga_jual_form.setAttribute('class', 'form-control harga_jual');
                 harga_jual_form.setAttribute('id', 'harga_jual[' + i + ']');
+                // harga_jual_form.setAttribute('onkeyup','hitung('+i+')');
 
                 var qty_form = document.createElement('input');
-                qty_form.setAttribute('name', 'harga_jual[' + i + ']');
+                qty_form.setAttribute('name', 'qty[' + i + ']');
                 qty_form.setAttribute('datanomor', i);
                 qty_form.setAttribute('class', 'form-control');
-                qty_form.setAttribute('id', 'harga_jual[' + i + ']');
+                qty_form.setAttribute('id', 'qty[' + i + ']');
+                qty_form.setAttribute('onkeyup','hitungqty('+i+')');
 
                 var keuntungan_form = document.createElement('input');
                 keuntungan_form.setAttribute('name', 'keuntungan[' + i + ']');
                 keuntungan_form.setAttribute('datanomor', i);
-                keuntungan_form.setAttribute('class', 'form-control dates');
+                keuntungan_form.setAttribute('class', 'form-control');
                 keuntungan_form.setAttribute('id', 'keuntungan[' + i + ']');
                 keuntungan_form.setAttribute('readonly', true);
 
@@ -249,6 +287,62 @@
             }
         });
         
+    }
+
+// function additem2(){
+//   console.log('hahaha')
+// }
+
+
+    var i = 1;
+    function additem2() {
+        // getBarang()
+          // menentukan target append
+          var itemlist2 = document.getElementById('itemlist2');
+
+          // membuat element
+          var row = document.createElement('tr');
+          var keterangan = document.createElement('td');
+          var nominal = document.createElement('td');
+          var aksi2 = document.createElement('td');
+
+          // meng append element
+          itemlist2.appendChild(row);
+          row.appendChild(keterangan);
+          row.appendChild(nominal);
+          row.appendChild(aksi2);
+
+          // membuat element input
+
+          var keterangan_form = document.createElement('input');
+          keterangan_form.setAttribute('name', 'keterangan[' + i + ']');
+          keterangan_form.setAttribute('datanomor', i);
+          keterangan_form.setAttribute('class', 'form-control keterangan');
+          keterangan_form.setAttribute('id', 'keterangan[' + i + ']');
+
+          var nominal_form = document.createElement('input');
+          nominal_form.setAttribute('name', 'nominal[' + i + ']');
+          nominal_form.setAttribute('datanomor', i);
+          nominal_form.setAttribute('class', 'form-control');
+          nominal_form.setAttribute('id', 'nominal[' + i + ']');
+
+         
+
+          var hapus = document.createElement('span');
+
+          // meng append element input
+          keterangan.appendChild(keterangan_form);
+          nominal.appendChild(nominal_form);
+          aksi2.appendChild(hapus);
+
+          hapus.innerHTML = '<button class="btn btn-small btn-danger">Delete</button>';
+          // membuat aksi delete element
+          hapus.onclick = function () {
+              row.parentNode.removeChild(row);
+          };
+
+          i++;
+                
     }
 
 
@@ -291,6 +385,39 @@
         });
         return false;
     })
+
+
+    // function hitung(o){
+    //   var nomor = o;
+    //   var beli = 'harga_beli['+nomor+']'
+    //   var harga_beli =  $('[name="'+beli+'"]').val();
+
+    //   var jual = 'harga_jual['+nomor+']'
+    //   var harga_jual =  $('[name="'+jual+'"]').val();
+
+    //   hasil = harga_jual - harga_beli
+    //   // $('[name="keuntungan['+nomor+']"]').val(hasil);
+     
+    // }
+
+
+    function hitungqty(o){
+      var nomor = o;
+
+      var beli = 'harga_beli['+nomor+']'
+      var harga_beli =  $('[name="'+beli+'"]').val();
+      
+      var jual = 'harga_jual['+nomor+']'
+      var harga_jual =  $('[name="'+jual+'"]').val();
+
+      var qty = 'qty['+nomor+']'
+      var qty_jual =  $('[name="'+qty+'"]').val();
+
+      hasil = (harga_jual * qty_jual) - (harga_beli * qty_jual)
+      $('[name="keuntungan['+nomor+']"]').val(hasil);
+     
+    }
+
 
 
 </script>
