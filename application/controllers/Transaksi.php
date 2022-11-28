@@ -52,5 +52,10 @@ class Transaksi extends CI_Controller{
         $this->load->view('__template/footer');
     }
 
+    function tampilTransaksi($tanggalMulai, $tanggalSelesai){
+        $query = $this->transaksiModel->tampilDataTransaksi($tanggalMulai, $tanggalSelesai)->result();
+        echo json_encode($query);
+    }
+
 
 }

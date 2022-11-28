@@ -31,14 +31,34 @@
               
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="table" class="table table-bordered table-hover">
+                <div class="form-inline">
+                    <div class="form-group mb-2">
+                        <label for="tanggalMulai" class="sr-only">Tanggal Mulai</label>
+                        <input type="text" class="form-control" id="tanggalMulai" placeholder="Tanggal Mulai">
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label for="tangggalSelesai" class="sr-only">Tanggal Selesai</label>
+                        <input type="text" class="form-control" id="tanggalSelesai" placeholder="Tanggal Selesai">
+                    </div>
+                    <button type="submit" id="tampilkanData" class="btn btn-primary mb-2">Tampilkan</button>
+                </div>
+                <table  class="table table-bordered table-hover">
                   <thead>
                   <tr>
                     <th>No</th>
                     <th>Nama kategori</th>
-                    <th>Dibuat</th>
-                    <th>Diupdate</th>
-                    <th>Aksi</th>
+                    <th>No Invoice</th>
+                    <th>No PO</th>
+                    <th>Tanggal PO</th>
+                    <th>Total Pembelian</th>
+                    <th>Total Penjualan</th>
+                    <th>Pajak Daerah</th>
+                    <th>PPN</th>
+                    <th>PPH</th>
+                    <th>Pajak Platform</th>
+                    <th>Pengeluaran dana</th>
+                    <th>Penjualan Bersih</th>
+                    <th>Keuntungan Bersih</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -64,90 +84,6 @@
   <!-- /.content-wrapper -->
 
 
-  
-  <div class="modal fade" id="modal-xl">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Tambah Data Kategori</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-
-                <form class="form-horizontal">
-                  <div class="card-body">
-                    
-                    <div class="form-group row">
-                      <label for="nama_kategori" class="col-sm-2 col-form-label">Nama Kategori</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" placeholder="Nama kategori">
-                      </div>
-                    </div>
-                    
-                  </div>
-                  <!-- /.card-body -->
-                  <div class="modal-footer justify-content-between">
-                    <button type="button" id="simpanKategori" class="btn btn-primary pull-right">Simpan Data</button>
-                  </div>
-                  <!-- /.card-footer -->
-                </form>
-
-
-            </div>
-            
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
- 
-
-
-
-
-  <div class="modal fade" id="modal-update">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Update Data Kategori</h4>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-
-                <form class="form-horizontal">
-                  <div class="card-body">
-                    
-                    <div class="form-group row">
-                      <label for="nama_kategori" class="col-sm-2 col-form-label">Nama Kategori</label>
-                      <div class="col-sm-10">
-                        <input type="hidden" class="form-control" id="id_kategori_update" name="id_kategori_update" placeholder="ID kategori" readonly>
-                        <input type="text" class="form-control" id="nama_kategori_update" name="nama_kategori_update" placeholder="Nama kategori">
-                      </div>
-                    </div>
-                    
-                  </div>
-                  <!-- /.card-body -->
-                  <div class="modal-footer justify-content-between">
-                    <button type="button" id="updateSimpanKategori" class="btn btn-primary pull-right">Simpan Data</button>
-                  </div>
-                  <!-- /.card-footer -->
-                </form>
-
-
-            </div>
-            
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
- 
 
 <!-- jQuery -->
 <script src="<?php echo base_url() ?>assets/adminlte/plugins/jquery/jquery.min.js"></script>
@@ -175,112 +111,23 @@
 <script src="<?php echo base_url() ?>assets/adminlte/plugins/select2/js/select2.full.min.js"></script>
 
 <script type="text/javascript">
-    
-
-    function tampilData(){
-        //datatables
-        var table;
-        table = $('#table').DataTable({ 
- 
-            "processing": true, 
-            "serverSide": true, 
-            "destroy": true,
-            "order": [], 
-            "ajax": {
-                "url": "<?php echo site_url('kategori/dataKategori')?>",
-                "type": "POST"
-            },
-            "columnDefs": [
-            { 
-                "targets": [ 0 ], 
-                "orderable": false, 
-            },
-            ],
- 
-        });
-        // table.destroy();
-    }
-
     $(document).ready(function() {
-      $('.select2').select2();
-      tampilData();
-      
-
-      $("#simpanKategori" ).click(function() {
-        // console.log('haha');
-        var namakategori=$('#nama_kategori').val();
+        $("#tampilkanData" ).click(function() {
+        // console.log('haha')
+        var tanggalMulai=$('#tanggalMulai').val();
+        var tanggalSelesai=$('#tanggalSelesai').val();
         $.ajax({
-            type : "POST",
-            url  : "<?php echo base_url('index.php/kategori/simpanKategori')?>",
+            type : "GET",
+            url  : "<?php echo base_url()?>index.php/transaksi/tampilTransaksi/"+tanggalMulai+"/"+tanggalSelesai,
             dataType : "JSON",
-            data : {namakategori:namakategori},
             success: function(data){
-                $('[name="nama_kategori"]').val("");
-                $('#modal-xl').modal('hide');
-                tampilData();
+                // $('[name="nama_kategori"]').val("");
+                // $('#modal-xl').modal('hide');
+                // tampilData();
+                console.log(data)
             }
         });
         return false;
       });
-
-    });
-
-
-    $(document).on('click', '.updateKategori', function(){
-      var id = $(this).attr("id");
-        $.ajax({
-            type : "GET",
-            url  : "<?php echo base_url()?>index.php/kategori/getKategori/"+id,
-            dataType : "JSON",
-            success: function(data){
-                $('[name="nama_kategori_update"]').val(data.nama_kategori);
-                $('[name="id_kategori_update"]').val(data.id_kategori);
-                $('#modal-update').modal('show');
-                
-            }
-        });
-        return false;
     })
-
-
-    $(document).on('click', '#updateSimpanKategori', function(){
-      var idkategori=$('#id_kategori_update').val();
-      var namakategori=$('#nama_kategori_update').val();
-      $.ajax({
-          type : "POST",
-          url  : "<?php echo base_url()?>index.php/kategori/updateKategori",
-          dataType : "JSON",
-          data : {idkategori:idkategori, namakategori:namakategori},
-          success: function(data){
-              $('[name="nama_kategori_update"]').val("");
-              $('#modal-update').modal('hide');
-              tampilData();
-          }
-      });
-      return false;
-    })
-
-
-    $(document).on('click', '.deleteKategori', function(){
-      var id = $(this).attr("id");
-      console.log(id)
-      if (confirm('Apakah ingin menghapus data?')) {
-        $.ajax({
-            type : "GET",
-            url  : "<?php echo base_url()?>index.php/kategori/hapusKategori/"+id,
-            dataType : "JSON",
-            success: function(data){
-              tampilData();
-            }
-        });
-        return false;
-      }
-        
-    })
-
-
-    
-
-
- 
 </script>
