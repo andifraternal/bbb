@@ -32,12 +32,12 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form class="form-horizontal">
+              <form class="form-horizontal" id="simpanTransaksiForm">
                 <div class="card-body">
                   <div class="form-group row">
                     <label for="kategori" class="col-sm-2 col-form-label">Kategori</label>
                     <div class="col-sm-10">
-                        <select class="form-control select2 " id="kategori" style="width: 100%;">
+                        <select class="form-control select2 " id="kategori" name="kategori" style="width: 100%;">
                         <option value='0'>----Pilih Kategori----</option>
                         <?php 
                             foreach ($kategori as $data) {
@@ -51,19 +51,19 @@
                   <div class="form-group row">
                     <label for="no_invoice" class="col-sm-2 col-form-label">No Invoice</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="no_invoice" placeholder="No Invoice">
+                      <input type="text" class="form-control" id="no_invoice" name="no_invoice" placeholder="No Invoice">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="no_po" class="col-sm-2 col-form-label">No PO</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="no_po" placeholder="No PO">
+                      <input type="text" class="form-control" id="no_po" name="no_po" placeholder="No PO">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="tanggal_po" class="col-sm-2 col-form-label">Tanggal PO</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control tanggal" id="tanggal_po" placeholder="Tanggal PO">
+                      <input type="text" class="form-control tanggal" id="tanggal_po" name="tanggal_po" placeholder="Tanggal PO">
                     </div>
                   </div>
 
@@ -142,7 +142,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <button type="submit" id="simpanTransaksi" class="btn btn-info">Simpan Data</button>
+                  <button class="btn btn-success" onclick="simpanData(); return false">Save</button>
                 </div>
                 <!-- /.card-footer -->
               </form>
@@ -385,20 +385,7 @@
         });
         return false;
     })
-
-
-    // function hitung(o){
-    //   var nomor = o;
-    //   var beli = 'harga_beli['+nomor+']'
-    //   var harga_beli =  $('[name="'+beli+'"]').val();
-
-    //   var jual = 'harga_jual['+nomor+']'
-    //   var harga_jual =  $('[name="'+jual+'"]').val();
-
-    //   hasil = harga_jual - harga_beli
-    //   // $('[name="keuntungan['+nomor+']"]').val(hasil);
-     
-    // }
+    // simpanTransaksi
 
 
     function hitungqty(o){
@@ -416,6 +403,25 @@
       hasil = (harga_jual * qty_jual) - (harga_beli * qty_jual)
       $('[name="keuntungan['+nomor+']"]').val(hasil);
      
+    }
+
+
+    function simpanData(){
+      // console.log('simpan haha')
+      var form = $('#simpanTransaksiForm')[0];
+      var formData = new FormData(form);
+      $.ajax({
+          url:'<?php echo base_url();?>index.php/transaksi/simpanTransaksi',
+          type:"POST",
+          data: formData,
+          processData:false,
+          contentType:false,
+          cache:false,
+          async:true,
+            success: function(o){
+                alert('Data tersimpan');
+        }
+      });
     }
 
 
