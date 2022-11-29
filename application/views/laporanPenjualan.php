@@ -397,7 +397,7 @@
                   // var pengeluaran = ''
                   aaa += '<tr>'
                   aaa += '<th style="width:50%">Pengeluaran</th>'
-                  aaa += '<td>'+data.jumlah[0].pajak_platform+'</td>'
+                  aaa += '<td>'+data.jumlah[0].pengeluaran+'</td>'
                   aaa += '</tr>'
                 }
 

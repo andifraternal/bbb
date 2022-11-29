@@ -68,13 +68,9 @@ class Transaksi extends CI_Controller{
 
 
     function downloadLaporan($id){
-        // $cell = $this->session->userdata('username');
         $barang = $this->transaksiModel->detailTransaksiBarang($id);
         $pengeluaran = $this->transaksiModel->detailTransaksipengeluaran($id);
         $jumlah = $this->transaksiModel->detailTransaksi($id)->row();
-        // $datarow = $this->sme_model->get_sme_2($periode, $cell)->row();
-        // $jumlah_data = $this->sme_model->get_sme_2($periode, $cell)->num_rows();
-        // $average = $this->sme_model->get_average_2($periode, $cell)->row();
 
         $objPHPExcel = new PHPExcel();
 
@@ -83,7 +79,7 @@ class Transaksi extends CI_Controller{
                 'size' => 18,
                 'bold' => true), 
                 'alignment' => array(    
-                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_LEFT, // Set text jadi ditengah secara horizontal (center)    
+                    'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)    
                     'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)  
                 )  
         );
@@ -167,14 +163,6 @@ class Transaksi extends CI_Controller{
             )
         );
 
-        // $objDrawing = new PHPExcel_Worksheet_Drawing();
-        // $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
-        // $objDrawing->setCoordinates('E6');
-        // $objDrawing->setName('Logo');
-        // $objDrawing->setDescription('Hwaseung Indonesia');
-        // $objDrawing->setPath('assets/image/logo.png');
-        // $objDrawing->setWidth(30)->setHeight(40);
-
         $objPHPExcel->getActiveSheet()->setCellValue('A1','Laporan Penjualan');
         $objPHPExcel->getActiveSheet()->mergeCells('A1:E1');
         $objPHPExcel->getActiveSheet()->getStyle('A1')->applyFromArray($style_header);
@@ -197,28 +185,6 @@ class Transaksi extends CI_Controller{
         $objPHPExcel->getActiveSheet()->getStyle('C8')->applyFromArray($blokAbuAbu);
         $objPHPExcel->getActiveSheet()->getStyle('D8')->applyFromArray($blokAbuAbu);
         $objPHPExcel->getActiveSheet()->getStyle('E8')->applyFromArray($blokAbuAbu);
-        // $objPHPExcel->getActiveSheet()->setCellValue('B7',': '.$datarow->AUDITOR);
-        // $objPHPExcel->getActiveSheet()->getStyle('A3:A7')->applyFromArray($style1);
-        // $objPHPExcel->getActiveSheet()->getStyle('B3:B7')->applyFromArray($style1);
-        // $objPHPExcel->getActiveSheet()->mergeCells('A9:A10');
-        // $objPHPExcel->getActiveSheet()->setCellValue('A9','SME MODULE 2');
-        // $objPHPExcel->getActiveSheet()->mergeCells('B9:C9');
-        // $objPHPExcel->getActiveSheet()->setCellValue('B9','APPLICABLE');
-        // $objPHPExcel->getActiveSheet()->mergeCells('D9:F9');
-        // $objPHPExcel->getActiveSheet()->setCellValue('D9','ASSESSMENT');
-        // $objPHPExcel->getActiveSheet()->mergeCells('G9:G10');
-        // $objPHPExcel->getActiveSheet()->setCellValue('G9','SCORE');
-        // $objPHPExcel->getActiveSheet()->getStyle('A9:G9')->applyFromArray($style3);
-        // $objPHPExcel->getActiveSheet()->mergeCells('A11:G11');
-        // $objPHPExcel->getActiveSheet()->setCellValue('A11','Cutting & Prep');
-        // $objPHPExcel->getActiveSheet()->getStyle('A11')->applyFromArray($blokAbuAbu);
-        // // $objPHPExcel->getActiveSheet()->getStyle('A11')->applyFromArray($style3);
-        // $objPHPExcel->getActiveSheet()->mergeCells('B10:C10');
-        // $objPHPExcel->getActiveSheet()->setCellValue('B10','N/A');
-        // $objPHPExcel->getActiveSheet()->setCellValue('D10','0 - Not Present');
-        // $objPHPExcel->getActiveSheet()->setCellValue('E10','1 - Present');
-        // $objPHPExcel->getActiveSheet()->setCellValue('F10','2 - Meets Expectations');
-        // $objPHPExcel->getActiveSheet()->getStyle('A10:G10')->applyFromArray($style3);
 
 
         $q = $barang->result();
@@ -229,8 +195,11 @@ class Transaksi extends CI_Controller{
                 $objPHPExcel->getActiveSheet()->setCellValue('A'.$row,$q[$i]->qty);
                 $objPHPExcel->getActiveSheet()->setCellValue('B'.$row,$q[$i]->nama_barang);
                 $objPHPExcel->getActiveSheet()->setCellValue('C'.$row,$q[$i]->harga_beli);
+                $objPHPExcel->getActiveSheet()->getStyle('C'.$row)->getNumberFormat()->setFormatCode('#,##0');
                 $objPHPExcel->getActiveSheet()->setCellValue('D'.$row,$q[$i]->harga_jual);
+                $objPHPExcel->getActiveSheet()->getStyle('D'.$row)->getNumberFormat()->setFormatCode('#,##0');
                 $objPHPExcel->getActiveSheet()->setCellValue('E'.$row,($q[$i]->qty)*($q[$i]->harga_jual));
+                $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
                 $row++;
         }
 
@@ -244,38 +213,96 @@ class Transaksi extends CI_Controller{
 
 
         $row+1;
-        // $objPHPExcel->getActiveSheet()->mergeCells('A'.$row.':G'.$row);
         $objPHPExcel->getActiveSheet()->setCellValue('A'.$row,'List Pengeluaran');
-        // $objPHPExcel->getActiveSheet()->getStyle('A'.$row)->applyFromArray($style1);
 
         $row = $row+1;
         $momo = $pengeluaran->result();
         $dodo = $pengeluaran->num_rows();
+        $ttt = $row;
 
-        // $i = $i;
-        // $j = $i+12;
         for($u=0; $u<$dodo; $u++){
             $objPHPExcel->getActiveSheet()->setCellValue('A'.$row,$momo[$u]->keterangan);
             $objPHPExcel->getActiveSheet()->setCellValue('B'.$row,$momo[$u]->nominal);
+            $objPHPExcel->getActiveSheet()->getStyle('B'.$row)->getNumberFormat()->setFormatCode('#,##0');
             $row++;
         };
 
-        // $i = $row+1;
-        for($i; $i<$row; $i++){
+        for($i= $ttt; $i<$row; $i++){
             $objPHPExcel->getActiveSheet()->getStyle('A'.$i)->applyFromArray($style_col);
             $objPHPExcel->getActiveSheet()->getStyle('B'.$i)->applyFromArray($style_col);
-            $objPHPExcel->getActiveSheet()->getStyle('C'.$i)->applyFromArray($style_col);
-            $objPHPExcel->getActiveSheet()->getStyle('D'.$i)->applyFromArray($style_col);
-            $objPHPExcel->getActiveSheet()->getStyle('E'.$i)->applyFromArray($style_col);
+        };
+
+        $row = $row;
+
+        $objPHPExcel->getActiveSheet()->setCellValue('D'.$row,'Sub total');
+        $objPHPExcel->getActiveSheet()->setCellValue('E'.$row,$jumlah->total_jual);
+        $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
+
+        
+        if($jumlah->pajak_daerah > 0){
+            $row = $row+1;
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$row,'Pajak Daerah');
+            $objPHPExcel->getActiveSheet()->setCellValue('E'.$row,$jumlah->pajak_daerah);
+            $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
         }
 
-              
+        
+        if($jumlah->ppn > 0){
+            $row = $row+1;
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$row,'PPN');
+            $objPHPExcel->getActiveSheet()->setCellValue('E'.$row,$jumlah->ppn);
+            $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
+        }
 
-        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(30);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(10);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(10);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(10);  
+        
+        if($jumlah->pph > 0){
+            $row = $row+1;
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$row,'PPH');
+            $objPHPExcel->getActiveSheet()->setCellValue('E'.$row,$jumlah->pph);
+            $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
+        }
+
+        
+        if($jumlah->pajak_platform > 0){
+            $row = $row+1;
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$row,'pajak Platform');
+            $objPHPExcel->getActiveSheet()->setCellValue('E'.$row,$jumlah->pajak_platform);
+            $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
+        }
+
+        
+        if($jumlah->pengeluaran > 0){
+            $row = $row+1;
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$row,'Total Pengeluaran');
+            $objPHPExcel->getActiveSheet()->setCellValue('E'.$row,$jumlah->pengeluaran);
+            $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
+        }
+
+        $row = $row+1;
+        $objPHPExcel->getActiveSheet()->setCellValue('D'.$row,'Total Modal');
+        $objPHPExcel->getActiveSheet()->setCellValue('E'.$row,$jumlah->total_beli);
+        $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
+
+        $row = $row+1;
+        $objPHPExcel->getActiveSheet()->setCellValue('D'.$row,'Penjualan Bersih');
+        $objPHPExcel->getActiveSheet()->setCellValue('E'.$row,$jumlah->penjualan_bersih);
+        $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
+
+        $row = $row+1;
+        $objPHPExcel->getActiveSheet()->setCellValue('D'.$row,'Laba');
+        $objPHPExcel->getActiveSheet()->setCellValue('E'.$row,$jumlah->keuntungan_bersih);
+        $objPHPExcel->getActiveSheet()->getStyle('E'.$row)->getNumberFormat()->setFormatCode('#,##0');
+
+        foreach(range('A','E') as $columnID) {
+            $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+                ->setAutoSize(true);
+        }  
+
+        // $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
+        // $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(30);
+        // $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(10);
+        // $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(10);
+        // $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(10);  
 
         $objPHPExcel->getActiveSheet()->setTitle('SME Modul 2');
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
