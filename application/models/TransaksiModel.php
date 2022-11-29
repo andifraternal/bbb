@@ -20,7 +20,7 @@ class TransaksiModel extends CI_Model{
 
     function tampilDataTransaksi($tanggalMulai, $tanggalSelesai){
         $query = $this->db->query("
-            select * from view_master_transaksi where tanggal_po >= '$tanggalMulai' and tanggal_po <= '$tanggalSelesai'
+            select * from view_master_transaksi where DATE_FORMAT(tanggal_po, '%Y-%m-%d') >= '$tanggalMulai' and DATE_FORMAT(tanggal_po, '%Y-%m-%d') <= '$tanggalSelesai'
         ");
         return $query;
     }

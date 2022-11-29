@@ -34,11 +34,11 @@
                 <div class="form-inline">
                     <div class="form-group mb-2">
                         <label for="tanggalMulai" class="sr-only">Tanggal Mulai</label>
-                        <input type="text" class="form-control" id="tanggalMulai" placeholder="Tanggal Mulai">
+                        <input type="date" class="form-control" id="tanggalMulai" placeholder="Tanggal Mulai">
                     </div>
                     <div class="form-group mx-sm-3 mb-2">
                         <label for="tangggalSelesai" class="sr-only">Tanggal Selesai</label>
-                        <input type="text" class="form-control" id="tanggalSelesai" placeholder="Tanggal Selesai">
+                        <input type="date" class="form-control" id="tanggalSelesai" placeholder="Tanggal Selesai">
                     </div>
                     <button type="submit" id="tampilkanData" class="btn btn-primary mb-2">Tampilkan</button>
                 </div>
@@ -190,7 +190,8 @@
                       <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
                         Payment
                       </button> -->
-                      <div id="buttonExcel"></div>
+                      <div id="buttonExcel" ></div>
+                      <div id="buttonTandaTerima" ></div>
                       <!-- <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                         <i class="fas fa-download"></i> Generate Excel
                       </button> -->
@@ -430,8 +431,11 @@
                 // $('#penjualanBersih').html(penjualan_bersih);
                 // $('#untung').html(untung);
 
-                var xx = '<a href="<?php echo base_url() ?>index.php/transaksi/downloadLaporan/'+id+'" rel="" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>'
+                var xx = '<a href="<?php echo base_url() ?>index.php/transaksi/downloadLaporan/'+id+'" rel="" target="_blank" class="btn btn-success float-right" style="margin-right:10px"> Download Laporan</a>'
                 $('#buttonExcel').html(xx);
+
+                var ff = '<a href="<?php echo base_url() ?>index.php/transaksi/downloadTandaTerima/'+id+'" rel="" target="_blank" class="btn btn-primary float-right" style="margin-right:10px"> Download Tanda Terima</a>'
+                $('#buttonTandaTerima').html(ff);
 
                 $('#modal-view').modal('show');
                 

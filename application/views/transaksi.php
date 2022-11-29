@@ -63,7 +63,7 @@
                   <div class="form-group row">
                     <label for="tanggal_po" class="col-sm-2 col-form-label">Tanggal PO</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control tanggal" id="tanggal_po" name="tanggal_po" placeholder="Tanggal PO">
+                      <input type="date" class="form-control tanggal" id="tanggal_po" name="tanggal_po" placeholder="Tanggal PO">
                     </div>
                   </div>
 
@@ -420,6 +420,7 @@
           async:true,
             success: function(o){
                 alert('Data tersimpan');
+                window.location.href=window.location.href;
         }
       });
     }
