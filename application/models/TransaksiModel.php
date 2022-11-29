@@ -24,4 +24,25 @@ class TransaksiModel extends CI_Model{
         ");
         return $query;
     }
+
+    function detailTransaksiBarang($id){
+        $query = $this->db->query("
+            select * from transaksi a join master_barang b on a.id_barang = b.id_barang where a.no_po = '$id'
+        ");
+        return $query;
+    }
+
+    function detailTransaksipengeluaran($id){
+        $query = $this->db->query("
+            select * from transaksi_pengeluaran where no_po = '$id'
+        ");
+        return $query;
+    }
+
+    function detailTransaksi($id){
+        $query = $this->db->query("
+            select * from view_master_transaksi where no_po = '$id'
+        ");
+        return $query;
+    }
 }
