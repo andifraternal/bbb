@@ -138,6 +138,48 @@
                     </div>
 
 
+                    <div class="form-group row">
+                      <label for="pajak_daerah" class="col-sm-1 col-form-label">Pajak Daerah</label>
+                      <div class="col-sm-2">
+                          <select class="form-control " id="pajak_daerah" name="pajak_daerah" style="width: 100%;">
+                            <option value='Y'>Ya</option>
+                            <option value='T'>Tidak</option>
+                          </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="ppn" class="col-sm-1 col-form-label">PPN</label>
+                      <div class="col-sm-2">
+                          <select class="form-control " id="ppn" name="ppn" style="width: 100%;">
+                            <option value='Y'>Ya</option>
+                            <option value='T'>Tidak</option>
+                          </select>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                      <label for="pph" class="col-sm-1 col-form-label">PPH</label>
+                      <div class="col-sm-2">
+                          <select class="form-control " id="pph" name="pph" style="width: 100%;">
+                            <option value='Y'>Ya</option>
+                            <option value='T'>Tidak</option>
+                          </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="pajak_platform" class="col-sm-1 col-form-label">Pajak Platform</label>
+                      <div class="col-sm-2">
+                          <select class="form-control " id="pajak_platform" name="pajak_platform" style="width: 100%;">
+                            <option value='Y'>Ya</option>
+                            <option value='T'>Tidak</option>
+                          </select>
+                      </div>
+                    </div>
+
+
                   
                 </div>
                 <!-- /.card-body -->

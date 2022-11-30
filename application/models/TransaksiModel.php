@@ -45,4 +45,15 @@ class TransaksiModel extends CI_Model{
         ");
         return $query;
     }
+
+    function simpanMasterTransaksi($id, $kategori,  $no_invoice, $no_po, $tanggal_po, $pajak_daerah, $ppn, $pph, $pajak_platform){
+        $query = $this->db->query("
+            insert into master_transaksi (id_master_transaksi, kategori, no_invoice, no_po, tanggal_po, pajak_daerah, ppn, pph, pajak_platform) 
+            values 
+            ('$id', '$kategori', '$no_invoice', '$no_po', '$tanggal_po', '$pajak_daerah', '$ppn', '$pph', '$pajak_platform')
+        ");
+        return $query;
+    }
+
+
 }
