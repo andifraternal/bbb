@@ -39,6 +39,10 @@
                   <tr>
                     <th>No</th>
                     <th>Nama kategori</th>
+                    <th>Pajak Daerah</th>
+                    <th>PPN</th>
+                    <th>PPH</th>
+                    <th>Pajak Platform</th>
                     <th>Dibuat</th>
                     <th>Diupdate</th>
                     <th>Aksi</th>
@@ -88,6 +92,34 @@
                         <input type="text" class="form-control" id="nama_kategori" name="nama_kategori" placeholder="Nama kategori">
                       </div>
                     </div>
+
+                    <div class="form-group row">
+                      <label for="pajak_daerah" class="col-sm-2 col-form-label">Pajak Daerah</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="pajak_daerah" name="pajak_daerah" placeholder="Pajak Daerah">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="ppn" class="col-sm-2 col-form-label">PPN</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="ppn" name="ppn" placeholder="PPN">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="pph" class="col-sm-2 col-form-label">PPH</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="pph" name="pph" placeholder="PPH">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="pajak_platform" class="col-sm-2 col-form-label">Pajak Platform</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="pajak_platform" name="pajak_platform" placeholder="Pajak Platform">
+                      </div>
+                    </div>
                     
                   </div>
                   <!-- /.card-body -->
@@ -130,6 +162,35 @@
                       <div class="col-sm-10">
                         <input type="hidden" class="form-control" id="id_kategori_update" name="id_kategori_update" placeholder="ID kategori" readonly>
                         <input type="text" class="form-control" id="nama_kategori_update" name="nama_kategori_update" placeholder="Nama kategori">
+                      </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                      <label for="pajak_daerah_update" class="col-sm-2 col-form-label">Pajak Daerah</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="pajak_daerah_update" name="pajak_daerah_update" placeholder="Pajak Daerah">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="ppn_update" class="col-sm-2 col-form-label">PPN</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="ppn_update" name="ppn_update" placeholder="PPN">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="pph_update" class="col-sm-2 col-form-label">PPH</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="pph_update" name="pph_update" placeholder="PPH">
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label for="pajak_platform_update" class="col-sm-2 col-form-label">Pajak Platform</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="pajak_platform_update" name="pajak_platform_update" placeholder="Pajak Platform">
                       </div>
                     </div>
                     
@@ -212,11 +273,16 @@
       $("#simpanKategori" ).click(function() {
         // console.log('haha');
         var namakategori=$('#nama_kategori').val();
+        var pajak_daerah=$('#pajak_daerah').val();
+        var ppn=$('#ppn').val();
+        var pph=$('#pph').val();
+        var pajak_platform=$('#pajak_platform').val();
+
         $.ajax({
             type : "POST",
             url  : "<?php echo base_url('index.php/kategori/simpanKategori')?>",
             dataType : "JSON",
-            data : {namakategori:namakategori},
+            data : {namakategori:namakategori, pajak_daerah:pajak_daerah, ppn:ppn, pph:pph, pajak_platform:pajak_platform},
             success: function(data){
                 $('[name="nama_kategori"]').val("");
                 $('#modal-xl').modal('hide');
@@ -238,6 +304,10 @@
             success: function(data){
                 $('[name="nama_kategori_update"]').val(data.nama_kategori);
                 $('[name="id_kategori_update"]').val(data.id_kategori);
+                $('[name="pajak_daerah_update"]').val(data.pajak_pd);
+                $('[name="ppn_update"]').val(data.pajak_ppn);
+                $('[name="pph_update"]').val(data.pajak_pph);
+                $('[name="pajak_platform_update"]').val(data.pajak_pf);
                 $('#modal-update').modal('show');
                 
             }
@@ -249,11 +319,16 @@
     $(document).on('click', '#updateSimpanKategori', function(){
       var idkategori=$('#id_kategori_update').val();
       var namakategori=$('#nama_kategori_update').val();
+
+      var pajak_daerah_update=$('#pajak_daerah_update').val();
+      var ppn_update=$('#ppn_update').val();
+      var pph_update=$('#pph_update').val();
+      var pajak_platform_update=$('#pajak_platform_update').val();
       $.ajax({
           type : "POST",
           url  : "<?php echo base_url()?>index.php/kategori/updateKategori",
           dataType : "JSON",
-          data : {idkategori:idkategori, namakategori:namakategori},
+          data : {idkategori:idkategori, namakategori:namakategori, pajak_daerah_update:pajak_daerah_update, ppn_update:ppn_update, pph_update:pph_update, pajak_platform_update:pajak_platform_update},
           success: function(data){
               $('[name="nama_kategori_update"]').val("");
               $('#modal-update').modal('hide');

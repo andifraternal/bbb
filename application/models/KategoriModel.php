@@ -76,11 +76,11 @@ class KategoriModel extends CI_Model{
         return $this->db->count_all_results();
     }
 
-    function insertData($kategori){
+    function insertData($kategori, $pajak_daerah, $ppn, $pph, $pajak_platform){
         $id             = uniqid();
         $status_aktif   = 1;
         $query = $this->db->query("
-            insert into master_kategori (id_kategori, nama_kategori, status_aktif) values ('$id', '$kategori', '$status_aktif')
+            insert into master_kategori (id_kategori, nama_kategori,  pajak_pd, pajak_ppn, pajak_pph, pajak_pf, status_aktif) values ('$id', '$kategori', '$pajak_daerah', '$ppn', '$pph', '$pajak_platform', '$status_aktif')
         ");
         return $query;
     }
@@ -92,9 +92,9 @@ class KategoriModel extends CI_Model{
         return $query;
     }
 
-    function updateData($id_kategori, $nama_kategori){
+    function updateData($id_kategori, $nama_kategori, $pajak_daerah_update, $ppn_update, $pph_update, $pajak_platform_update){
         $query = $this->db->query("
-            update master_kategori set nama_kategori = '$nama_kategori' where id_kategori = '$id_kategori'
+            update master_kategori set nama_kategori = '$nama_kategori', pajak_pd= '$pajak_daerah_update', pajak_ppn = '$ppn_update', pajak_pph = '$pph_update', pajak_pf= '$pajak_platform_update' where id_kategori = '$id_kategori'
         ");
         return $query;
     }
